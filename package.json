@@ -1,0 +1,21 @@
+{
+  "name": "export-html",
+  "main": "./lib/export-html",
+  "version": "0.9.0",
+  "description": "Export to HTML and open this! (You can also print)",
+  "keywords": [
+  ],
+  "activationCommands": {
+    "atom-workspace": "export-html:export"
+  },
+  "repository": "https://github.com/nobuhito/atom-export-html",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+    "underscore-plus": "^1.6.6",
+    "highlight.js": "^8.7.0",
+    "roaster": "^1.2.0"
+  }
+}
