@@ -35,11 +35,11 @@ module.exports = ExportHtml =
   export: ->
     editor = atom.workspace.getActiveTextEditor()
     tmpdir = os.tmpdir()
-    filename = editor.getTitle()
-    tmpfile = path.join(tmpdir, filename + ".html")
     return unless editor?
+    title = editor.getTitle() || 'untitled'
+    tmpfile = path.join(tmpdir, title + ".html")
     text = editor.getText()
-    html = @getHtml(editor, tmpfile, (path, contents) =>
+    html = @getHtml(editor, title, tmpfile, (path, contents) =>
       fs = require 'fs'
       fs.writeFileSync(path, contents, "utf8")
       @openPath path if atom.config.get("export-html.openBrowser") is true
@@ -53,7 +53,7 @@ module.exports = ExportHtml =
       when 'linux' then exec ('xdg-open "'+filePath+'"')
       when 'win32' then Shell.openExternal('file:///'+filePath)
 
-  getHtml: (editor, path, cb) ->
+  getHtml: (editor, title, path, cb) ->
     grammar = editor.getGrammar()
     text = editor.getText()
     style = ""
@@ -67,7 +67,6 @@ module.exports = ExportHtml =
       html = text
       cb(path, html)
     else
-      title = editor.getTitle()
       language  = title?.split(".")?.pop() || grammar.scopeName?.split(".").pop()
       body = @buildBodyByCode _.escape(text), language
       html = @buildHtml body
