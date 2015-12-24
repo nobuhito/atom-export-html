@@ -20,6 +20,17 @@ module.exports = ExportHtml =
       default: "github"
       tilte: "Stylesheet"
       description: "Choose from [highlight.js styles.](https://github.com/isagalaev/highlight.js/tree/master/src/styles) ."
+    lineNumber:
+      type: "object"
+      properties:
+        use:
+          type: "boolean"
+          default: true
+        styles:
+          type: "string"
+          title: "StyleSheet"
+          default: "opacity: 0.5;"
+
 
   activate: ->
 
@@ -95,6 +106,14 @@ module.exports = ExportHtml =
         body, .hljs {
           font-family: #{atom.config.get("editor.fontFamily")};
         }
+        .number {
+          text-align: right;
+          display: inline-block;
+          margin-right: 5px;
+        }
+        .ln {
+          #{atom.config.get("export-html.lineNumber.styles")}
+        }
       </style>
     </head>
     <body>
@@ -105,10 +124,22 @@ module.exports = ExportHtml =
     return html
 
   buildBodyByCode: (text, language) ->
+    lines = text.split(/\r?\n/)
+    width = if lines.length.toString().split("").length > 3 then "40" else "20"
+    text = lines.map( (l, i) =>
+      return "<span class=\"number\">#{i + 1}</span>#{l}"
+    ).join("\n") if atom.config.get("export-html.lineNumber.use")
+
     body = """
     <pre><code class="#{language}">
     #{text}
     </code></pre>
     <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+      setTimeout(function() {
+        [].forEach.call(document.querySelectorAll("span.number"), function(e) { e.style.width = "#{width}px";});
+        [].forEach.call(document.querySelectorAll("span.number span"), function(e) { e.className = "ln hljs-subst";});
+      }, 100);
+    </script>
     """
     return body
