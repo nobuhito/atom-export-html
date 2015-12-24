@@ -85,8 +85,9 @@ module.exports = ExportHtml =
 
   buildHtml: (body) ->
     style = atom.config.get("export-html.style")
-    css = "http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/#{style}.min.css"
-    js = "http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"
+    highlightjs = "http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0"
+    css = "#{highlightjs}/styles/#{style}.min.css"
+    js = "#{highlightjs}/highlight.min.js"
     html = """
     <html>
     <head>
