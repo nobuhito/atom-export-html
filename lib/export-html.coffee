@@ -92,6 +92,7 @@ module.exports = ExportHtml =
     <html>
     <head>
       <meta charset="UTF-8">
+      <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
       <link rel="stylesheet" href="#{css}">
       <script src="#{js}"></script>
       <style>
@@ -108,6 +109,7 @@ module.exports = ExportHtml =
           font-family: #{atom.config.get("editor.fontFamily")};
         }
         .number {
+          float:left;
           text-align: right;
           display: inline-block;
           margin-right: 5px;
@@ -128,7 +130,7 @@ module.exports = ExportHtml =
     lines = text.split(/\r?\n/)
     width = if lines.length.toString().split("").length > 3 then "40" else "20"
     text = lines.map( (l, i) =>
-      return "<span class=\"number\">#{i + 1}</span>#{l}"
+      return "<span class=\"number\"><span>#{i + 1}</span></span><span class=\"code\">#{l}</span>"
     ).join("\n") if atom.config.get("export-html.lineNumber.use")
 
     body = """
@@ -138,9 +140,26 @@ module.exports = ExportHtml =
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
       setTimeout(function() {
-        [].forEach.call(document.querySelectorAll("span.number"), function(e) { e.style.width = "#{width}px";});
-        [].forEach.call(document.querySelectorAll("span.number span"), function(e) { e.className = "ln hljs-subst";});
+        $(".number").css("width", "#{width}px");
+        $(".number span").attr("class", "ln hljs-subst");
+        resize();
+        var timer = false;
+        $(window).resize(function() {
+          if (timer !== false) {
+            clearTimeout(timer);
+          }
+          timer = setTimeout(function() {
+            resize();
+          }, 200);
+        })
+
       }, 100);
+      function resize() {
+        $("span.code").each(function(i, c) {
+          var h = $(c).height();
+          $(c).prev().height(h);
+        });
+      }
     </script>
     """
     return body
