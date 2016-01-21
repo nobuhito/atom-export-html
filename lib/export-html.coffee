@@ -8,28 +8,28 @@ _ = require 'underscore-plus'
 module.exports = ExportHtml =
   subscriptions: null
 
-  config:
-    fontSize:
-      type: "integer"
-      default: 12
-    openBrowser:
-      type: "boolean"
-      default: true
-    style:
-      type: "string"
-      default: "github"
-      tilte: "Stylesheet"
-      description: "Choose from [highlight.js styles.](https://github.com/isagalaev/highlight.js/tree/master/src/styles) ."
-    lineNumber:
-      type: "object"
-      properties:
-        use:
-          type: "boolean"
-          default: true
-        styles:
-          type: "string"
-          title: "StyleSheet"
-          default: "opacity: 0.5;"
+  # config:
+  #   fontSize:
+  #     type: "integer"
+  #     default: 12
+  #   openBrowser:
+  #     type: "boolean"
+  #     default: true
+  #   style:
+  #     type: "string"
+  #     default: "github"
+  #     tilte: "Stylesheet"
+  #     description: "Choose from [highlight.js styles.](https://github.com/isagalaev/highlight.js/tree/master/src/styles) ."
+  #   lineNumber:
+  #     type: "object"
+  #     properties:
+  #       use:
+  #         type: "boolean"
+  #         default: true
+  #       styles:
+  #         type: "string"
+  #         title: "StyleSheet"
+  #         default: "opacity: 0.5;"
 
 
   activate: ->
