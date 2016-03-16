@@ -1,3 +1,4 @@
+ExportHtmlBrowserView = require "./export-html-bowser-view"
 {CompositeDisposable} = require 'atom'
 os = require "os"
 path = require "path"
@@ -6,6 +7,7 @@ Shell = require 'shell'
 _ = require 'underscore-plus'
 
 module.exports = ExportHtml =
+  preview: null
   subscriptions: null
 
   # config:
@@ -42,6 +44,8 @@ module.exports = ExportHtml =
 
   deactivate: ->
     @subscriptions.dispose()
+    @preview = null
+    @previewPanel.destroy()
 
   export: ->
     editor = atom.workspace.getActiveTextEditor()
@@ -53,8 +57,25 @@ module.exports = ExportHtml =
     html = @getHtml(editor, title, tmpfile, (path, contents) =>
       fs = require 'fs'
       fs.writeFileSync(path, contents, "utf8")
-      @openPath path if atom.config.get("export-html.openBrowser") is true
+      openIn = atom.config.get("export-html.openIn")
+      if openIn is "atom"
+        @openPreview path
+      else if openIn is "browser"
+        @openPath path
     )
+
+  panelHide: ->
+    @previewPanel.hide()
+
+  openPreview: (path) ->
+    params = {}
+    params.src = path
+    if @preview?
+      @previewPanel.show()
+      @preview.loadURL params.src
+    else
+      @preview = new ExportHtmlBrowserView(params, this)
+      @previewPanel = atom.workspace.addRightPanel(item:atom.views.getView(@preview))
 
   openPath: (filePath) ->
     # http://atomio.discourse.org/t/how-do-you-get-file-path/8693/7

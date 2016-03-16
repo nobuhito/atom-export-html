@@ -5,9 +5,10 @@
       "type": "integer",
       "default": 12
     },
-    "openBrowser": {
-      "type": "boolean",
-      "default": true
+    "openIn": {
+      "type": "string",
+      "default": "atom",
+      "enum": ["atom", "browser", "none"]
     },
     "style": {
       "type": "string",
@@ -43,6 +44,7 @@
     "atom": ">=1.0.0 <2.0.0"
   },
   "dependencies": {
+    "atom-space-pen-views": "^2.1.0",
     "underscore-plus": "^1.6.6",
     "highlight.js": "^8.7.0",
     "roaster": "^1.2.0"
