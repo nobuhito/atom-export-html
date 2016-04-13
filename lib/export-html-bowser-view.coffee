@@ -3,7 +3,7 @@ module.exports =
   class ExportHtmlBrowserView extends View
     @content: (params, self) ->
       @div style:"height:100%;width:0px", =>
-        @tag "webview", id:"epreview", outlet:"epreview", src:params.src, nodeintegration:"on"
+        @tag "webview", id:"epreview", outlet:"epreview", src:params.src, nodeintegration:"on", style:"display: inline-block "
 
     initialize: (params, self) ->
       @self = self

@@ -5,6 +5,7 @@ path = require "path"
 {exec} = require 'child_process'
 Shell = require 'shell'
 _ = require 'underscore-plus'
+aliases = require './aliases'
 
 module.exports = ExportHtml =
   preview: null
@@ -99,16 +100,29 @@ module.exports = ExportHtml =
       html = text
       cb(path, html)
     else
-      language  = title?.split(".")?.pop() || grammar.scopeName?.split(".").pop()
+      language = title?.split(".")?.pop() || grammar.scopeName?.split(".").pop()
       body = @buildBodyByCode _.escape(text), language
-      html = @buildHtml body
+      html = @buildHtml body, language
       cb(path, html)
 
-  buildHtml: (body) ->
+  resolveAliase: (language) ->
+    table = {}
+    aliases.table
+      .split("\n")
+      .map((l) -> l.split(/,\s?/))
+      .forEach (l) ->
+        l.forEach (d) ->
+          table[d] = l[0]
+
+    return table[language];
+
+  buildHtml: (body, language) ->
+    language = @resolveAliase(language)
     style = atom.config.get("export-html.style")
-    highlightjs = "http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0"
+    highlightjs = "https://rawgithub.com/highlightjs/cdn-release/master/build"
     css = "#{highlightjs}/styles/#{style}.min.css"
     js = "#{highlightjs}/highlight.min.js"
+    lang = "#{highlightjs}/languages/#{language}.min.js"
     html = """
     <html>
     <head>
@@ -116,6 +130,7 @@ module.exports = ExportHtml =
       <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
       <link rel="stylesheet" href="#{css}">
       <script src="#{js}"></script>
+      <script src="#{lang}"></script>
       <style>
         body {
           margin: 0px;
