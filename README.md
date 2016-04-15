@@ -1,15 +1,5 @@
-# test1
+# export-html package for Atom
 
-asdfasf
+Write the file being displayed as HTML, it can be printed directly from the Atom.
 
-
-
-# test2
-
-testadsf
-
-
-
-# test3
-
-asdf
+![screen-cast](https://raw.githubusercontent.com/nobuhito/atom-export-html/master/screen-cast.gif)
