@@ -4,7 +4,6 @@ config = {
     // title: "reveal.js – The HTML Presentation Framework",
     // theme: "black",
     // highlight: "zenburn"
-    theme: "solarized"
   },
   initialize: {
     controls: true,
