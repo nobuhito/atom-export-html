@@ -18,7 +18,7 @@
 		<link rel="stylesheet" href="css/theme/black.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/zenburn.css" id="highlight">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -40,10 +40,10 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section data-markdown="README.md"  
-         				 data-separator="^\n\n\n"  
-         				 data-separator-vertical="^\n\n"  
-         				 data-separator-notes="^Note:"  
+				<section data-markdown="README.md"
+         				 data-separator="^\n\n\n"
+         				 data-separator-vertical="^\n\n"
+         				 data-separator-notes="^Note:"
          				 data-charset="utf-8">
 				</section>
 			</div>
@@ -58,8 +58,19 @@
 
 			// Full list of configuration options available at:
 			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize(config);
+			Reveal.initialize(config.initialize);
 
+			if (config.meta.title) {
+				document.title = config.meta.title;
+			}
+
+			if (config.meta.theme) {
+				document.getElementById('theme').setAttribute("href", "css/theme/" + config.meta.theme + ".css");
+			}
+
+			if (config.meta.highlight) {
+				document.getElementById('highlight').setAttribute("href", "css/css/" + config.meta.theme + ".css");
+			}
 		</script>
 
 	</body>
