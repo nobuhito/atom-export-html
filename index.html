@@ -40,7 +40,8 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
-				<section data-markdown="README.md"
+				<section id="markdown"
+				         data-markdown="README.md"
          				 data-separator="^\n\n\n"
          				 data-separator-vertical="^\n\n"
          				 data-separator-notes="^Note:"
@@ -49,28 +50,35 @@
 			</div>
 
 		</div>
-
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
 		<script src="config.js"></script>
 
 		<script>
+			var elm = function(id) { return document.getElementById(id); }
+			if (config.meta.title) { document.title = config.meta.title; }
 
+			var setHref = function(target, parent, name) {
+				elm(target).setAttribute("href", "css/" + parent + "/" + name + ".css");
+			}
+			if (config.meta.theme) { setHref("theme", "theme", config.meta.theme); }
+			if (config.meta.highlight) { setHref("highlight", "css", config.meta.highlight); }
+
+			var setAttr = function(target, attr, val) {
+				attr = attr.replace(/[A-Z]/, function(s) { return "-" + s.toLowerCase(); });
+				elm(target).setAttribute(attr, val);
+			};
+			["markdown", "separator", "separatorVertical", "separatorNotes", "charset"].forEach(function(d) {
+				if (config.markdown[d]) { setAttr("markdown", "data-" + d, config.markdown[d]); }
+			});
+
+		</script>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
 			// Full list of configuration options available at:
 			// https://github.com/hakimel/reveal.js#configuration
 			Reveal.initialize(config.initialize);
-
-			if (config.meta.title) {
-				document.title = config.meta.title;
-			}
-
-			if (config.meta.theme) {
-				document.getElementById('theme').setAttribute("href", "css/theme/" + config.meta.theme + ".css");
-			}
-
-			if (config.meta.highlight) {
-				document.getElementById('highlight').setAttribute("href", "css/css/" + config.meta.theme + ".css");
-			}
 		</script>
 
 	</body>

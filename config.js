@@ -5,7 +5,16 @@ config = {
     // theme: "black",
     // highlight: "zenburn"
   },
+  markdown: {
+    // markdown: "README.md",
+    // separator: "^\n\n\n",
+    // separatorVertical: "\n\n",
+    // separatorNotes: "^Note:",
+    // charset: "utf-8"
+  },
   initialize: {
+		// Full list of configuration options available at:
+		// https://github.com/hakimel/reveal.js#configuration
     controls: true,
   	progress: true,
   	history: true,
