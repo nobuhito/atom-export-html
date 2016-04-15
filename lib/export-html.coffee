@@ -132,26 +132,33 @@ module.exports = ExportHtml =
       <script src="#{js}"></script>
       <script src="#{lang}"></script>
       <style>
-        body {
+        body, table {
           margin: 0px;
           padding: 15px;
-          font-size: #{atom.config.get("export-html.fontSize")}
+          font-size: #{atom.config.get("export-html.fontSize")};
         }
         .hljs {
           margin: -15px;
-          word-wrap: break-word;
         }
-        body, .hljs {
+        pre {
+          white-space: -moz-pre-wrap;
+          white-space: -pre-wrap;
+          white-space: -o-pre-wrap;
+          white-space: pre-wrap;
+          word-wrap: break-word;
+          word-break : break-all;
+        }
+        body, table, .hljs, pre {
           font-family: #{atom.config.get("editor.fontFamily")};
         }
         .number {
-          float:left;
+          vertical-align: top;
           text-align: right;
-          display: inline-block;
           margin-right: 5px;
         }
         .ln {
-          #{atom.config.get("export-html.lineNumber.styles")}
+          word-break: keep-all;
+          #{atom.config.get("export-html.lineNumber.styles")};
         }
       </style>
     </head>
@@ -165,37 +172,29 @@ module.exports = ExportHtml =
   buildBodyByCode: (text, language) ->
     lines = text.split(/\r?\n/)
     width = if lines.length.toString().split("").length > 3 then "40" else "20"
-    text = lines.map( (l, i) =>
-      return "<span class=\"number\"><span>#{i + 1}</span></span><span class=\"code\">#{l}</span>"
-    ).join("\n") if atom.config.get("export-html.lineNumber.use")
+
+    if atom.config.get("export-html.lineNumber.use")
+      text = "<table style=\"width:100%\">"
+      text += lines.map( (l, i) =>
+        return "<tr><td class=\"number\">#{i + 1}</td><td class=\"code\"><pre>#{l}</pre></td></tr>"
+      ).join("\n")
+      text += "</table>"
 
     body = """
     <pre><code class="#{language}">
     #{text}
     </code></pre>
-    <script>hljs.initHighlightingOnLoad();</script>
     <script>
+      hljs.initHighlightingOnLoad();
       setTimeout(function() {
-        $(".number").css("width", "#{width}px");
-        $(".number span").attr("class", "ln hljs-subst");
-        resize();
-        var timer = false;
-        $(window).resize(function() {
-          if (timer !== false) {
-            clearTimeout(timer);
+        $("td.number > span").attr("class", "ln hljs-subst");
+        $("span").each(function(i, d) {
+          console.log(i, $(d).text().trim());
+          if ($(d).text().trim() == "") {
+            d.remove();
           }
-          timer = setTimeout(function() {
-            resize();
-          }, 200);
-        })
-
-      }, 100);
-      function resize() {
-        $("span.code").each(function(i, c) {
-          var h = $(c).height();
-          $(c).prev().height(h);
         });
-      }
+      }, 1);
     </script>
     """
     return body
