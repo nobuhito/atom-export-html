@@ -160,6 +160,9 @@ module.exports = ExportHtml =
           word-break: keep-all;
           #{atom.config.get("export-html.lineNumber.styles")};
         }
+        pre {
+          tab-size:      #{atom.config.get("export-html.tabWidth")};
+        }
       </style>
     </head>
     <body>
