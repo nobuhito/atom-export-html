@@ -33,7 +33,11 @@
           "default": "opacity: 0.5;"
         }
       }
-    }
+    },
+	"tabWidth": {
+		"type": "integer",
+		"default": 4
+	}
   },
   "main": "./lib/export-html",
   "version": "3.0.0",
