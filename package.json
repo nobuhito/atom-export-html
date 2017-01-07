@@ -34,13 +34,13 @@
         }
       }
     },
-	"tabWidth": {
-		"type": "integer",
-		"default": 4
-	}
+    "tabWidth": {
+      "type": "integer",
+      "default": 4
+    }
   },
   "main": "./lib/export-html",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Write the file being displayed as HTML, it can be printed directly from the Atom.",
   "keywords": [],
   "activationCommands": {
