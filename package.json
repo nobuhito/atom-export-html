@@ -24,12 +24,13 @@
       "type": "object",
       "properties": {
         "use": {
+          "title": "Print line numbers",
           "type": "boolean",
           "default": true
         },
         "styles": {
           "type": "string",
-          "title": "StyleSheet",
+          "title": "Stylesheet",
           "default": "opacity: 0.5;"
         }
       }
