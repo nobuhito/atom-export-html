@@ -18,23 +18,26 @@
       "type": "string",
       "default": "github",
       "tilte": "Stylesheet",
-      "description": "Choose from [highlight.js styles.](https://github.com/isagalaev/highlight.js/tree/master/src/styles) ."
+      "description": "Choose from [highlight.js styles](https://github.com/isagalaev/highlight.js/tree/master/src/styles)."
     },
     "lineNumber": {
+      "title": "Line Numbers",
       "type": "object",
       "properties": {
         "use": {
+          "title": "Print Line Numbers",
           "type": "boolean",
           "default": true
         },
         "styles": {
           "type": "string",
-          "title": "StyleSheet",
+          "title": "Stylesheet",
           "default": "opacity: 0.5;"
         }
       }
     },
     "tabWidth": {
+      "title": "Tab Length",
       "type": "integer",
       "default": 4
     }

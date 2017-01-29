@@ -3,7 +3,7 @@
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'export-html'
+      'label': 'Export HTML'
       'submenu': [
         {
           'label': 'Export'
