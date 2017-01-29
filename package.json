@@ -21,6 +21,7 @@
       "description": "Choose from [highlight.js styles](https://github.com/isagalaev/highlight.js/tree/master/src/styles)."
     },
     "lineNumber": {
+      "title": "Line Numbers",
       "type": "object",
       "properties": {
         "use": {
